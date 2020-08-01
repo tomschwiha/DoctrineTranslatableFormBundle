@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\TranslatableListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,9 +23,9 @@ class TranslatableType extends AbstractType
 
     /**
      * TranslatableType constructor.
-     *
-     * @param DoctrineTranslatableDataMapper $mapper
-     * @param array                          $locales
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatableListener $translatableListener
+     * @param array $locales
      */
     public function __construct(EntityManagerInterface $entityManager, TranslatableListener $translatableListener, array $locales = [])
     {
@@ -40,7 +40,7 @@ class TranslatableType extends AbstractType
 
         foreach ($options['locales'] as $locale) {
             $typeOptions = $options['type_options'];
-            $typeOptions['label'] = Intl::getLocaleBundle()->getLocaleName($locale);
+            $typeOptions['label'] = Languages::getName($locale);
 
             //Mark the first locale as required if needed
             if ($options['required'] && $options['locales'][0] === $locale) {

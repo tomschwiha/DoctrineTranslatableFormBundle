@@ -122,7 +122,7 @@ class DoctrineTranslatableDataMapper implements DataMapperInterface
 
         $entity = $form->getParent()->getParent()->getData();
         if ($this->isEmbeddedClass($entity)) {
-            $field = $form->getParent()->getParent()->getName() . '.' . $field;
+            $field = $form->getParent()->getParent()->getName().'.'.$field;
         }
 
         return $field;
